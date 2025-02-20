@@ -1,17 +1,18 @@
 import json
 
-with open('sample-data.json', 'r') as file:
+with open("sample-data.json") as file:
     data = json.load(file)
 
 print("Interface Status")
 print("=" * 80)
-print("{:<50}{:<25}{:<8}{:<6}".format("DN", "Description", "Speed", "MTU"))
+print(f"{'DN':<50} {'Description':<20} {'Speed':<7} {'MTU':<6}")
 print("-" * 80)
 
-for entry in data['imdata']:
-    dn = entry['fabricEthEstc']['attributes']['dn']
-    description = entry['fabricEthEstc']['attributes'].get('descr', '')
-    speed = entry['fabricEthEstc']['attributes'].get('speed', 'inherit')
-    mtu = entry['fabricEthEstc']['attributes'].get('mtu', '')
+for item in data["imdata"]:
+    attributes = item["l1PhysIf"]["attributes"]
+    dn = attributes["dn"]
+    description = attributes.get("descr", "")  # Default empty if no description
+    speed = attributes.get("speed", "inherit")
+    mtu = attributes.get("mtu", "Unknown")
 
-    print("{:<50}{:<25}{:<8}{:<6}".format(dn, description, speed, mtu))
+    print(f"{dn:<50} {description:<20} {speed:<7} {mtu:<6}")
